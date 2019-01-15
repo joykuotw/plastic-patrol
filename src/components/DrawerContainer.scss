@@ -18,6 +18,14 @@
     }
   }
 
+  .pieces {
+    position: absolute;
+    height: 40px;
+    bottom: 20px;
+    align-self: center;
+    padding-bottom: 20px;
+  }
+
   .built-by-geovation {
     display: flex;
     flex: 1;

@@ -27,11 +27,14 @@ async function fetchPhotos() {
         "type": "FeatureCollection",
         "features": []
       };
+      let totalPieces = 0;
 
       querySnapshot.forEach( doc => {
         const photo = extractPhoto(doc);
         console.debug(`${doc.id} =>`, photo);
-
+        if (photo.pieces) {
+          totalPieces += photo.pieces;
+        }
         const feature = {
           "type": "Feature",
           "geometry": {
@@ -48,6 +51,7 @@ async function fetchPhotos() {
       });
 
       localStorage.setItem("cachedGeoJson", JSON.stringify(geojson));
+      localStorage.setItem("totalPieces", totalPieces);
 
       return geojson;
     });

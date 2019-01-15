@@ -325,6 +325,7 @@ class App extends Component {
         <DrawerContainer user={this.state.user} online={this.state.online}
           handleClickLoginLogout={this.handleClickLoginLogout}
           leftDrawerOpen={this.state.leftDrawerOpen} toggleLeftDrawer={this.toggleLeftDrawer}
+          totalPieces={localStorage.getItem('totalPieces')}
         />
 
       </div>

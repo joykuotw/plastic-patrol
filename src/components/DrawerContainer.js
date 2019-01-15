@@ -37,7 +37,7 @@ const PAGES = config.PAGES;
 class DrawerContainer extends Component {
 
   render() {
-    const { classes, user, online, leftDrawerOpen } = this.props;
+    const { classes, user, online, leftDrawerOpen, totalPieces } = this.props;
     const ListItemsTop = [
       {
         visible: user,
@@ -108,6 +108,9 @@ class DrawerContainer extends Component {
               </ListItem>
             )}
           </List>
+        </div>
+        <div className='pieces'>
+          { !totalPieces ? 'Loading pieces...' : `${totalPieces} pieces found so far`}
         </div>
         <div className='built-by-geovation'>
           <Typography className='built-by-text'>
