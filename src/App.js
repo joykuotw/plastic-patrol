@@ -102,12 +102,27 @@ class App extends Component {
     }
   }
 
+  countTotalPieces = async (photos) => {
+    let totalPieces = 0;
+    const photoObj = await photos;
+    Object.keys(photoObj.features).forEach(key => {
+      const properties = photoObj.features[key].properties;
+      if (properties.pieces) {
+        totalPieces += properties.pieces;
+      }
+    });
+
+    this.setState({ totalPieces });
+  }
 
   componentDidMount(){
     gtag('config', config.GA_TRACKING_ID, {
       'page_path' : '/#' + this.props.location.pathname,
     });
-    this.setState({ photos: dbFirebase.fetchPhotos() });
+
+    const photos = dbFirebase.fetchPhotos();
+    this.countTotalPieces(photos);
+    this.setState({ photos });
 
     this.unregisterConnectionObserver = dbFirebase.onConnectionStateChanged(online => {
       this.setState({online});
@@ -218,15 +233,6 @@ class App extends Component {
     this.setState({leftDrawerOpen: isItOpen})
   };
 
-  getTotalPieces = () => {
-    try {
-      const totalPieces = localStorage.getItem('totalPieces');
-      return !totalPieces ? 'Loading pieces...' : `${totalPieces} pieces found so far`;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   render() {
     const { classes } = this.props;
     return (
@@ -334,7 +340,7 @@ class App extends Component {
         <DrawerContainer user={this.state.user} online={this.state.online}
           handleClickLoginLogout={this.handleClickLoginLogout}
           leftDrawerOpen={this.state.leftDrawerOpen} toggleLeftDrawer={this.toggleLeftDrawer}
-          totalPieces={this.getTotalPieces()}
+          totalPieces={this.state.totalPieces}
         />
 
       </div>

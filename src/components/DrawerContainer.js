@@ -116,7 +116,7 @@ class DrawerContainer extends Component {
           </List>
         </div>
         <div className={classes.pieces}>
-          {totalPieces}
+          {`${totalPieces | 0} pieces found so far`}
         </div>
         <div className='built-by-geovation'>
           <Typography className='built-by-text'>
