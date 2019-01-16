@@ -218,6 +218,15 @@ class App extends Component {
     this.setState({leftDrawerOpen: isItOpen})
   };
 
+  getTotalPieces = () => {
+    try {
+      const totalPieces = localStorage.getItem('totalPieces');
+      return !totalPieces ? 'Loading pieces...' : `${totalPieces} pieces found so far`;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -325,7 +334,7 @@ class App extends Component {
         <DrawerContainer user={this.state.user} online={this.state.online}
           handleClickLoginLogout={this.handleClickLoginLogout}
           leftDrawerOpen={this.state.leftDrawerOpen} toggleLeftDrawer={this.toggleLeftDrawer}
-          totalPieces={localStorage.getItem('totalPieces')}
+          totalPieces={this.getTotalPieces()}
         />
 
       </div>

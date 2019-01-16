@@ -29,6 +29,12 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
     maxWidth: drawerMaxWidth,
+  },
+  pieces: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 3,
+    alignSelf: 'center',
+    paddingBottom: theme.spacing.unit * 3
   }
 });
 
@@ -109,8 +115,8 @@ class DrawerContainer extends Component {
             )}
           </List>
         </div>
-        <div className='pieces'>
-          { !totalPieces ? 'Loading pieces...' : `${totalPieces} pieces found so far`}
+        <div className={classes.pieces}>
+          {totalPieces}
         </div>
         <div className='built-by-geovation'>
           <Typography className='built-by-text'>
