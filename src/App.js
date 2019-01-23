@@ -102,18 +102,6 @@ class App extends Component {
     }
   }
 
-  countTotalPieces = async (photos) => {
-    let totalPieces = 0;
-    const photoObj = await photos;
-    Object.keys(photoObj.features).forEach(key => {
-      const properties = photoObj.features[key].properties;
-      if (properties.pieces) {
-        totalPieces += properties.pieces;
-      }
-    });
-
-    this.setState({ totalPieces });
-  }
 
   componentDidMount(){
     gtag('config', config.GA_TRACKING_ID, {
@@ -121,8 +109,12 @@ class App extends Component {
     });
 
     const photos = dbFirebase.fetchPhotos();
-    this.countTotalPieces(photos);
-    this.setState({ photos });
+    config.getStats(photos).then(stats => {
+      this.setState({ photos, stats });
+    }).catch(err => {
+      console.error('Get Stats: ', err.message);
+      this.setState({ photos, stats: 0 });
+    });
 
     this.unregisterConnectionObserver = dbFirebase.onConnectionStateChanged(online => {
       this.setState({online});
@@ -340,7 +332,7 @@ class App extends Component {
         <DrawerContainer user={this.state.user} online={this.state.online}
           handleClickLoginLogout={this.handleClickLoginLogout}
           leftDrawerOpen={this.state.leftDrawerOpen} toggleLeftDrawer={this.toggleLeftDrawer}
-          totalPieces={this.state.totalPieces}
+          stats={this.state.stats}
         />
 
       </div>
